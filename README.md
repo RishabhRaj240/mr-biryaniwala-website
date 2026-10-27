@@ -1,141 +1,92 @@
 # 🍛 MR. BIRIYANIWALA
 
 ### Where Indian Flavours Meet Cinematic Digital Experiences.
+> 184 Gouger Street, Adelaide SA 5000 · (08) 8231 9988 · 100% Halal Certified
 
-A premium, immersive Indian food website built around cinematic visuals, AI-generated food photography, and scroll-driven video storytelling. Designed to make every dish feel like an experience before the first bite.
+A premium, immersive Indian restaurant web experience celebrating authentic royal Hyderabadi Dum Pukht biryani sealed in hand-hammered copper handis with whole-wheat dough (*purdah*), alongside screaming-hot 480°C red ironbark charcoal tandoori meats.
 
 <p align="center">
-  <strong>🔥 Rich Flavours · 🎬 Cinematic Motion · ✨ AI-Powered Visuals</strong>
+  <strong>🔥 Rich Flavours · 🎬 Cinematic Motion · ✨ Fast & Fully Responsive</strong>
 </p>
 
 ---
 
 ## 🌟 The Experience
 
-MR. BIRIYANIWALA reimagines the traditional restaurant website with a premium dark aesthetic, warm golden lighting, floating ingredients, and immersive food animations.
+MR. BIRIYANIWALA reimagines the traditional restaurant website with a premium dark aesthetic (`#0A0706`), warm saffron and copper lighting, floating ingredients, and scroll-driven interactive dish scrubbing.
 
-Every visual is designed to celebrate the textures, colours, and richness of Indian cuisine.
+### 🍽️ Signature Craft Menu
 
-## 🍽️ Signature Menu
-
-| 🍛 Dish | 📝 Highlight |
+| 🍛 Dish | 📝 Highlight & Craft |
 |---|---|
-| Dum Biryani | Aromatic saffron rice and authentic spices |
-| Butter Chicken | Creamy, rich tomato-makhani gravy |
-| Tandoori Chicken | Smoky char and bold Indian spices |
-| Lamb Seekh Kebab | Grilled perfection with mint chutney |
-| Paneer Tikka | Charred paneer with vibrant vegetables |
-| Dal Makhani | Slow-cooked richness and buttery texture |
-| Garlic Butter Naan | Golden char with garlic and melted butter |
-| Mango Lassi | Creamy mango refreshment |
+| **Gosht Dum Biryani** | Aged long-grain basmati, pasture-raised goat on the bone, 24 strands of Kashmiri saffron under dough purdah |
+| **Old Delhi Murgh Makhani** | Charcoal-charred chicken simmered 8 hours in vine-ripened tomatoes, churned butter & kasuri methi |
+| **Charcoal Tandoori Murgh** | Whole spring chicken steeped 12 hours in hung buffalo curd, cold-pressed mustard oil & Mathania chillies |
+| **Peshawari Lamb Seekh** | Pasture lamb shoulder with marrow, green cardamom, smoked cloves over screaming-hot red ironbark coals |
+| **Tandoori Malai Paneer Tikka** | Full cream cottage paneer in yellow mustard seed, carom seeds, and blistered sweet peppers |
+| **24-Hour Dal Makhani** | Slow-simmered black urad lentils & kidney beans steeped overnight over dying coals with white butter |
+| **Clay Oven Garlic Butter Naan** | Slapped firmly against 480°C clay wall, blistered in 30 seconds & basted with smoking garlic ghee |
+| **Alphonso Mango Kesari Lassi** | Chilled buffalo milk curd hand-whisked with Ratnagiri Alphonso pulp, green cardamom & silver vark |
 
-## 🎬 Cinematic Visuals
+---
 
-The website's visual identity is powered by AI-generated media and motion-focused storytelling.
+## ✨ Features & Performance Architecture
 
-- **AI Food Photography** — Detailed, photorealistic dish imagery.
-- **Exploded Food Animations** — Ingredients float, separate, and transform around signature dishes.
-- **Scroll-Driven Video** — Hero animations designed to respond to the visitor's scrolling.
-- **Atmospheric Motion** — Floating spices, falling ingredients, flowing gravy, and rising steam.
-- **Cinematic Storefront** — Warm amber lighting and a moody nighttime restaurant scene.
+- **Interactive Scroll-Scrubbed Hero:** Seamlessly scrubs through 8 signature craft dishes using GSAP ScrollTrigger and high-framerate I-frame encoded video clips (`keyint=2`).
+- **High-Performance On-Demand Streaming:**
+  - Faststart progressive video streaming with zero seek delay (< 5ms).
+  - Device-aware video routing (`-m.mp4` for mobile devices) saving over 60% bandwidth.
+  - Preloaded high-priority hero posters for sub-second Largest Contentful Paint (LCP).
+  - Asynchronous fonts and deferred non-blocking scripts.
+  - CSS `content-visibility: auto` to optimize rendering and reduce memory footprint.
+- **Fully Responsive Multi-Screen Design:**
+  - Modern `100dvh` viewport handling with fallback for mobile address bars.
+  - Slide-out mobile navigation drawer with live opening hours and tap-to-call.
+  - Mobile quick dish selector chips carousel.
+  - Lenis smooth inertia scrolling on desktop wheel while respecting native touch physics on mobile.
+- **Complete Culinary Experience:**
+  - **The Dum Pukht Craft:** Three-stage methodology of purdah dough seal, kalai copper handis, and top-and-bottom ember convection.
+  - **24 Sacred Potli Spices:** Botanical tasting notes on Kashmiri Saffron, Dagad Phool, Shahi Jeera, Javitri, Star Anise, and Mathania Chillies.
+  - **Curated Menu:** Filterable dishes (Biryanis, Tandoori, Curries, Breads & Drinks) with dietary badges (`HALAL`, `GF`, `VEG`).
+  - **Clay Pit Tandoor:** Showcasing Australian red ironbark lump charcoal searing at 480°C.
+  - **Visit & Booking:** Gouger Street location details, live Adelaide timezone hours check, Google Maps directions, and table reservation request form.
 
-## 🧠 AI Creative Toolkit
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Google%20Flow-AI%20Studio-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Flow"/>
-  <img src="https://img.shields.io/badge/Nano%20Banana-Image%20Generation-FFB000?style=for-the-badge" alt="Nano Banana"/>
-  <img src="https://img.shields.io/badge/Veo%203-Cinematic%20Video-8B5CF6?style=for-the-badge" alt="Veo 3"/>
-</p>
-
-| Tool | Role |
-|---|---|
-| Google Flow | Creative asset generation workflow |
-| Nano Banana | Still-image generation |
-| Veo 3 | Cinematic video generation |
-| Frames-to-Video | Dish animation using still-image starting frames |
-| Text-to-Video | Atmospheric cinematic loops |
-
-### 🎞️ Asset Breakdown
-
-| Asset Type | Quantity |
-|---|---:|
-| Food and environment stills | 10 |
-| Scroll-driven hero videos | 8 |
-| Atmospheric video loops | 5 |
-| **Total planned assets** | **23** |
-
-## 🎨 Visual Identity
-
-- **Signature background:** `#0A0706`
-- **Colour palette:** Saffron, copper, charcoal, and cream
-- **Lighting:** Warm golden highlights with soft rim lighting
-- **Photography:** Premium macro food-commercial aesthetic
-- **Motion:** Slow, elegant, ingredient-focused animation
+---
 
 ## 🛠️ Built With
 
-Adapt this list to match the technologies in the actual repository.
+- **HTML5:** Semantic architecture, accessible ARIA roles, responsive viewport meta.
+- **CSS3:** Custom luxury design tokens, HSL/RGB tailored palettes, glassmorphism, responsive clamp units, zero CSS frameworks.
+- **JavaScript (ES6+):** Pure vanilla JavaScript engine, GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13.
+- **Media Optimization:** FFmpeg automated delogo & keyint processing, WebP image encoding.
 
-- HTML5
-- CSS3
-- JavaScript
-- Google Flow
-- Nano Banana
-- Veo 3
-- Responsive web design
-- Scroll-driven video animation
+---
 
 ## 🚀 Run Locally
 
-**1. Clone the repository**
+You can serve the project using any static HTTP server:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+# Using Python 3
+python3 -m http.server 8080
+
+# Or using Node.js
+npx serve .
 ```
 
-**2. Enter the project directory**
+Open `http://localhost:8080` in your web browser.
 
-```bash
-cd YOUR_PROJECT_DIRECTORY
-```
+---
 
-**3. Install dependencies** *(if applicable)*
+## 📍 Location & Contact
 
-```bash
-npm install
-```
-
-**4. Start the development server** *(if configured)*
-
-```bash
-npm run dev
-```
-
-Check the project's `package.json` for the correct scripts and dependencies.
-
-## ⚡ Performance Goals
-
-- Optimized images and video assets
-- Responsive layouts for desktop, tablet, and mobile
-- Efficient video loading and playback
-- Smooth scroll-linked animation
-- Reduced-motion accessibility support
-
-## 🔮 What's Next?
-
-- Interactive digital menu
-- Online ordering integration
-- Restaurant location and contact details
-- Enhanced mobile video optimization
-- Accessibility and performance refinements
-
-## 👨‍💻 Project
-
-**MR. BIRIYANIWALA**  
-*A creative web experience celebrating the art of Indian food.*
+- **Address:** 184 Gouger Street, Adelaide SA 5000
+- **Phone:** (08) 8231 9988
+- **Hours:** Monday – Sunday · 11:30 AM – 10:30 PM
+- **Certification:** 100% Certified Halal Meats
 
 ---
 
 <p align="center">
-  <strong>Made with ❤️, creativity, and a passion for cinematic web design.</strong>
+  <strong>Made with ❤️, creativity, and a passion for culinary excellence.</strong>
 </p>

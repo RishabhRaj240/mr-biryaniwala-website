@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Mr. Biriyaniwala — Hyderabadi Dum Biryani & Charcoal Tandoor | Adelaide</title>
+  <meta name="description" content="Authentic Hyderabadi dum pukht biryani sealed in copper handis with whole-wheat dough, and screaming-hot charcoal tandoori meats. Gouger Street, Adelaide.">
+  <meta name="theme-color" content="#0a0706">
+
+  <!-- Favicon SVG Handi -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23f0a032' d='M6 14h20c1 0 2 1 2 2v6c0 4-3 7-8 7h-8c-5 0-8-3-8-7v-6c0-1 1-2 2-2z'/%3E%3Cpath fill='%23ffc35a' d='M9 11h14c1 0 2 1 2 2H7c0-1 1-2 2-2z'/%3E%3C/svg%3E">
+
+  <!-- High-priority Preload for Hero Poster (Instant LCP) -->
+  <link rel="preload" as="image" href="media/hero/biryani.jpg" fetchpriority="high">
+
+  <!-- Google Fonts: Fraunces, Instrument Sans, DM Mono, Tiro Devanagari Hindi -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap">
+  </noscript>
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Libraries: GSAP + ScrollTrigger + Lenis (Deferred for non-blocking rendering) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+
+  <!-- Film Grain Texture Overlay -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Custom Magnetic Cursor (Pointer Devices Only) -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring">
+      <span class="cursor-label" id="cursor-label">TASTE</span>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+       0. SNAPPY & RESILIENT LOADER
+       ============================================================================== -->
+  <div class="loader-wrapper" id="loader" role="dialog" aria-label="Loading restaurant experience">
+    <div class="loader-curtain loader-curtain-top"></div>
+    <div class="loader-curtain loader-curtain-bottom"></div>
+
+    <div class="loader-content">
+      <!-- Handi SVG with 3 Animated Steam Curls -->
+      <svg class="loader-handi-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+        <path class="steam-curl steam-curl-1" d="M42 28 Q38 18 44 10" stroke="var(--saffron-light)" stroke-width="2.5" stroke-linecap="round"/>
+        <path class="steam-curl steam-curl-2" d="M50 24 Q55 15 48 8" stroke="var(--saffron)" stroke-width="2.5" stroke-linecap="round"/>
+        <path class="steam-curl steam-curl-3" d="M58 28 Q62 18 56 10" stroke="var(--saffron-light)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M22 42 Q50 38 78 42 L84 48 C84 75 75 88 50 88 C25 88 16 75 16 48 Z" fill="rgba(192, 106, 58, 0.25)" stroke="var(--copper)" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M20 42 Q50 34 80 42 C82 44 82 47 78 48 Q50 42 22 48 C18 47 18 44 20 42 Z" fill="var(--cream-90)" stroke="var(--saffron)" stroke-width="2"/>
+        <path d="M16 52 C8 52 8 64 17 66" stroke="var(--saffron)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M84 52 C92 52 92 64 83 66" stroke="var(--saffron)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
+      <div class="loader-progress-box">
+        <div class="loader-bar-bg">
+          <div class="loader-bar-fill" id="loader-fill"></div>
+        </div>
+        <div class="loader-stats">
+          <span>DUM INITIALIZING</span>
+          <span id="loader-counter">000</span>
+        </div>
+        <div class="loader-message" id="loader-msg">Sealing the handi with dough...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+       1. NAVIGATION
+       ============================================================================== -->
+  <header class="main-nav" id="main-nav">
+    <div class="nav-left">
+      <a href="#hero-container" class="nav-logo" data-cursor="HOME" aria-label="Mr. Biriyaniwala Home">
+        <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+          <path d="M6 14 Q16 11 26 14 L28 17 C28 26 23 30 16 30 C9 30 4 26 4 17 Z" fill="rgba(240, 160, 50, 0.2)" stroke="var(--saffron)" stroke-width="2"/>
+          <path d="M5 14 Q16 10 27 14" stroke="var(--cream)" stroke-width="2"/>
+        </svg>
+        <span class="nav-logo-text">Mr.<strong>Biriyaniwala</strong></span>
+      </a>
+
+      <!-- Adelaide Time Zone Live Status Pill -->
+      <div class="nav-status-pill" id="nav-status-pill">
+        <span class="status-indicator-dot"></span>
+        <span id="status-text">Checking hours...</span>
+      </div>
+    </div>
+
+    <nav aria-label="Primary Navigation">
+      <ul class="nav-center-links">
+        <li><a href="#the-dum" class="nav-link" data-cursor="THE DUM">The Dum</a></li>
+        <li><a href="#spices" class="nav-link" data-cursor="SPICES">Spices</a></li>
+        <li><a href="#menu" class="nav-link" data-cursor="MENU">Menu</a></li>
+        <li><a href="#tandoor" class="nav-link" data-cursor="FIRE">Tandoor</a></li>
+        <li><a href="#visit" class="nav-link" data-cursor="VISIT">Visit</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-right">
+      <a href="tel:+61882319988" class="nav-cta-btn" data-cursor="CALL" aria-label="Call restaurant">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span>Call to order</span>
+      </a>
+
+      <!-- Functional Hamburger Button for Mobile/Tablet -->
+      <button class="nav-burger-btn" id="nav-burger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="nav-logo">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+            <path d="M6 14 Q16 11 26 14 L28 17 C28 26 23 30 16 30 C9 30 4 26 4 17 Z" fill="rgba(240, 160, 50, 0.2)" stroke="var(--saffron)" stroke-width="2"/>
+            <path d="M5 14 Q16 10 27 14" stroke="var(--cream)" stroke-width="2"/>
+          </svg>
+          <span class="nav-logo-text">Mr.<strong>Biriyaniwala</strong></span>
+        </div>
+        <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close navigation menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="drawer-status-pill" id="drawer-status-pill">
+          <span class="status-indicator-dot"></span>
+          <span id="drawer-status-text">Adelaide · Open Daily</span>
+        </div>
+
+        <nav class="drawer-links" aria-label="Mobile Menu Links">
+          <a href="#hero-container" class="drawer-link"><span class="drawer-num">00</span> Signature Showcase</a>
+          <a href="#the-dum" class="drawer-link"><span class="drawer-num">01</span> The Dum Pukht</a>
+          <a href="#spices" class="drawer-link"><span class="drawer-num">02</span> 24 Potli Spices</a>
+          <a href="#menu" class="drawer-link"><span class="drawer-num">03</span> Curated Menu</a>
+          <a href="#tandoor" class="drawer-link"><span class="drawer-num">04</span> Charcoal Tandoor</a>
+          <a href="#visit" class="drawer-link"><span class="drawer-num">05</span> Visit & Booking</a>
+        </nav>
+
+        <div class="drawer-contact-card">
+          <div class="drawer-address">
+            <strong>Gouger Street Dining</strong>
+            <p>184 Gouger Street, Adelaide SA 5000</p>
+            <span class="drawer-hours">Daily: 11:30 AM – 10:30 PM</span>
+          </div>
+          <a href="tel:+61882319988" class="drawer-cta-call">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>Call (08) 8231 9988</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+       MAIN CONTENT
+       ============================================================================== -->
+  <main>
+    <!-- ==============================================================================
+         HERO SECTION: 8 SIGNATURE DISHES SCRUBBED BY SCROLL
+         ============================================================================== -->
+    <section class="hero-scroll-container" id="hero-container">
+      <div class="hero-pin-viewport" id="hero-pin">
+
+        <!-- Dynamic Ambient Light Glow -->
+        <div class="hero-ambient-glow" aria-hidden="true"></div>
+
+        <!-- Giant Typography Background Watermark -->
+        <div class="hero-giant-word-wrap" aria-hidden="true">
+          <div class="giant-word" id="giant-word">Biriyani</div>
+        </div>
+
+        <!-- Left Narrative & Dish Info -->
+        <aside class="hero-left-panel">
+          <div class="dish-category-eyebrow" id="dish-category">01 / DUM PUKHT</div>
+          <h1 class="dish-title-masked">
+            <span class="dish-title-line dish-title-line-1"><span id="title-line-1">Gosht Dum</span></span>
+            <span class="dish-title-line dish-title-line-2"><span id="title-line-2">Biryani</span></span>
+          </h1>
+          <p class="dish-description" id="dish-desc">
+            Aged long-grain basmati and pasture-raised goat on the bone, infused with twenty-four strands of Kashmiri saffron under a sealed whole-wheat dough purdah.
+          </p>
+          <div class="dish-price-row">
+            <span class="dish-price-tag" id="dish-price">$28</span>
+            <span class="dish-order-hint">Scroll down to explore craft</span>
+          </div>
+        </aside>
+
+        <!-- Center 3D Arch & Interactive Scrub Video Stage -->
+        <div class="hero-center-stage" id="hero-stage" data-cursor="EXPLORE">
+          <div class="hero-arch-frame">
+            <div class="hero-video-stack">
+              <!-- Dish 01: Biryani -->
+              <video id="video-biryani" class="hero-dish-video is-active" poster="media/hero/biryani.jpg" muted playsinline preload="auto"></video>
+              <!-- Dish 02: Makhani -->
+              <video id="video-makhani" class="hero-dish-video" poster="media/hero/makhani.jpg" muted playsinline preload="metadata"></video>
+              <!-- Dish 03: Tandoori -->
+              <video id="video-tandoori" class="hero-dish-video" poster="media/hero/tandoori.jpg" muted playsinline preload="none"></video>
+              <!-- Dish 04: Seekh -->
+              <video id="video-seekh" class="hero-dish-video" poster="media/hero/seekh.jpg" muted playsinline preload="none"></video>
+              <!-- Dish 05: Tikka -->
+              <video id="video-tikka" class="hero-dish-video" poster="media/hero/tikka.jpg" muted playsinline preload="none"></video>
+              <!-- Dish 06: Dal -->
+              <video id="video-dal" class="hero-dish-video" poster="media/hero/dal.jpg" muted playsinline preload="none"></video>
+              <!-- Dish 07: Naan -->
+              <video id="video-naan" class="hero-dish-video" poster="media/hero/naan.jpg" muted playsinline preload="none"></video>
+              <!-- Dish 08: Lassi -->
+              <video id="video-lassi" class="hero-dish-video" poster="media/hero/lassi.jpg" muted playsinline preload="none"></video>
+            </div>
+          </div>
+
+          <!-- Rotating Circular Badge with Center Handi Icon -->
+          <div class="hero-badge-wrap" aria-hidden="true">
+            <svg class="hero-rotating-badge" viewBox="0 0 140 140">
+              <defs>
+                <path id="badge-circle-path" d="M 70, 70 m -50, 0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0"/>
+              </defs>
+              <text class="badge-text">
+                <textPath href="#badge-circle-path" startOffset="0%">
+                  MR. BIRIYANIWALA ✦ HYDERABADI DUM BIRYANI ✦ ADELAIDE ✦
+                </textPath>
+              </text>
+            </svg>
+            <svg class="badge-center-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+              <path d="M6 14 Q16 11 26 14 L28 17 C28 26 23 30 16 30 C9 30 4 26 4 17 Z" fill="rgba(240, 160, 50, 0.25)" stroke="var(--saffron)" stroke-width="2"/>
+              <path d="M5 14 Q16 10 27 14" stroke="var(--saffron-light)" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Mobile Touch Dish Selector Chips -->
+        <div class="hero-mobile-index" id="hero-mobile-index" aria-label="Signature Dishes Quick Selector">
+          <div class="mobile-dish-scroller">
+            <button class="mobile-dish-chip active" data-index="0" type="button"><span>01</span> Dum</button>
+            <button class="mobile-dish-chip" data-index="1" type="button"><span>02</span> Makhani</button>
+            <button class="mobile-dish-chip" data-index="2" type="button"><span>03</span> Tandoori</button>
+            <button class="mobile-dish-chip" data-index="3" type="button"><span>04</span> Seekh</button>
+            <button class="mobile-dish-chip" data-index="4" type="button"><span>05</span> Tikka</button>
+            <button class="mobile-dish-chip" data-index="5" type="button"><span>06</span> Dal</button>
+            <button class="mobile-dish-chip" data-index="6" type="button"><span>07</span> Naan</button>
+            <button class="mobile-dish-chip" data-index="7" type="button"><span>08</span> Lassi</button>
+          </div>
+        </div>
+
+        <!-- Desktop Right Side Clickable 8-Dish Selector Index -->
+        <nav class="hero-right-index" aria-label="Signature Dishes Navigation">
+          <button class="index-dish-item active" data-index="0" data-cursor="01 DUM">
+            <span class="index-dish-num">01</span>
+            <span class="index-dish-name">Gosht Dum Biryani</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="1" data-cursor="02 MAKHANI">
+            <span class="index-dish-num">02</span>
+            <span class="index-dish-name">Old Delhi Murgh Makhani</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="2" data-cursor="03 TANDOOR">
+            <span class="index-dish-num">03</span>
+            <span class="index-dish-name">Charcoal Tandoori Murgh</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="3" data-cursor="04 SEEKH">
+            <span class="index-dish-num">04</span>
+            <span class="index-dish-name">Peshawari Lamb Seekh</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="4" data-cursor="05 TIKKA">
+            <span class="index-dish-num">05</span>
+            <span class="index-dish-name">Tandoori Paneer Tikka</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="5" data-cursor="06 DAL">
+            <span class="index-dish-num">06</span>
+            <span class="index-dish-name">24-Hour Dal Makhani</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="6" data-cursor="07 NAAN">
+            <span class="index-dish-num">07</span>
+            <span class="index-dish-name">Clay Oven Garlic Naan</span>
+            <span class="index-dish-bar"></span>
+          </button>
+          <button class="index-dish-item" data-index="7" data-cursor="08 LASSI">
+            <span class="index-dish-num">08</span>
+            <span class="index-dish-name">Alphonso Mango Lassi</span>
+            <span class="index-dish-bar"></span>
+          </button>
+        </nav>
+
+        <!-- Bottom Bar: Counter Strip, Scroll Hint, Timeline Progress -->
+        <footer class="hero-bottom-bar">
+          <div class="hero-counter-strip">
+            <span class="counter-current" id="counter-current">01</span>
+            <span>/</span>
+            <span>08</span>
+            <span class="counter-label">SIGNATURE CRAFT</span>
+          </div>
+
+          <div class="hero-scroll-cue">
+            <span>Scroll to scrub</span>
+            <svg class="scroll-cue-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+          </div>
+
+          <div class="hero-timeline-progress-track">
+            <div class="hero-timeline-progress-fill" id="timeline-progress"></div>
+          </div>
+        </footer>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         2. THE DUM SECTION: THE SACRED TRADITION
+         ============================================================================== -->
+    <section class="site-section section-dum" id="the-dum">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">01 / DUM PUKHT CRAFT</span>
+          <h2 class="section-title">The Sacred Copper Handi & Dough Purdah</h2>
+          <p class="section-lead">
+            In Hyderabadi culinary lore, <em>Dum Pukht</em> translates literally to "breathe in its own aroma." We do not rush. The meats and aged rice cook in their own steam, trapped under a hand-kneaded whole-wheat dough ring.
+          </p>
+        </div>
+
+        <div class="dum-grid">
+          <div class="dum-card">
+            <div class="dum-card-badge">STEP 01</div>
+            <h3>Purdah Dough Seal</h3>
+            <p>Every single portion is individually sealed with whole-wheat dough, locking every molecule of moisture, saffron, and clove inside the vessel until cracked open at your table.</p>
+          </div>
+
+          <div class="dum-card">
+            <div class="dum-card-badge">STEP 02</div>
+            <h3>Heavy Copper & Kalai</h3>
+            <p>We cook exclusively in hand-hammered heavy copper handis lined with fresh tin (*kalai*), ensuring radiant, uniform heat distribution that never scorches the basmati grain.</p>
+          </div>
+
+          <div class="dum-card">
+            <div class="dum-card-badge">STEP 03</div>
+            <h3>Dying Red Embers</h3>
+            <p>The sealed handi is placed over gentle ironbark coals with a shovelful of burning coals piled directly onto the lid, creating true top-and-bottom convection dum cooking.</p>
+          </div>
+        </div>
+
+        <div class="dum-media-banner">
+          <img src="media/img/biryani.webp" alt="Traditional Hyderabadi Dum Biryani handi" loading="lazy" class="dum-banner-img" width="1920" height="1072">
+          <div class="dum-banner-overlay">
+            <div class="dum-banner-quote">
+              <span class="quote-mark">“</span>
+              <p>When the seal cracks, the fragrant cloud carries you straight to the courtyard of Chowmahalla Palace.</p>
+              <span class="quote-author">— Head Ustad, Mr. Biriyaniwala</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         3. SPICES SECTION: THE 24 SACRED POTLI SPICES
+         ============================================================================== -->
+    <section class="site-section section-spices" id="spices">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">02 / BOTANY & AROMA</span>
+          <h2 class="section-title">24 Sacred Potli Spices</h2>
+          <p class="section-lead">
+            Every morning at 6:00 AM, our spice master ties twenty-four whole botanicals into muslin cloth potlis. These are submerged deep into the broth to impart aroma without harsh grit.
+          </p>
+        </div>
+
+        <div class="spices-grid">
+          <div class="spice-card">
+            <div class="spice-hindi">केसर</div>
+            <h3 class="spice-name">Kashmiri Mongra Saffron</h3>
+            <span class="spice-origin">Pampore, Kashmir</span>
+            <p>Highest grade whole red stigmas, hand-plucked and steeped in warm whole milk for deep golden hue and honeyed aroma.</p>
+          </div>
+
+          <div class="spice-card">
+            <div class="spice-hindi">पत्थर फूल</div>
+            <h3 class="spice-name">Dagad Phool (Stone Flower)</h3>
+            <span class="spice-origin">Western Ghats</span>
+            <p>Wild lichen harvested from mossy rock faces. Releases the signature earthy, forest aroma indispensable to authentic Hyderabadi masala.</p>
+          </div>
+
+          <div class="spice-card">
+            <div class="spice-hindi">शाही जीरा</div>
+            <h3 class="spice-name">Shahi Caraway (Royal Cumin)</h3>
+            <span class="spice-origin">Kabul Valley</span>
+            <p>Dark, crescent-shaped seeds with notes of anise and pine, distinct from ordinary cumin, providing royal digestive balance.</p>
+          </div>
+
+          <div class="spice-card">
+            <div class="spice-hindi">जावित्री</div>
+            <h3 class="spice-name">Javitri (Mace Blades)</h3>
+            <span class="spice-origin">Malabar Coast</span>
+            <p>The delicate crimson aril encasing the nutmeg seed, bringing subtle warm sweetness and lingering fragrance to the meat marinade.</p>
+          </div>
+
+          <div class="spice-card">
+            <div class="spice-hindi">चक्र फूल</div>
+            <h3 class="spice-name">Chakra Phool (Star Anise)</h3>
+            <span class="spice-origin">Southern Highlands</span>
+            <p>Eight-pointed star pods roasted lightly to extract licorice warmth that harmonizes the rich goat and lamb marrow.</p>
+          </div>
+
+          <div class="spice-card">
+            <div class="spice-hindi">मथानिया मिर्च</div>
+            <h3 class="spice-name">Mathania Red Chillies</h3>
+            <span class="spice-origin">Rajasthan</span>
+            <p>Sun-cured desert pods prized for brilliant vermilion color, smoky fruitiness, and rounded heat that warms without blistering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         4. MENU SECTION: THE CURATED DASTARKHĀN
+         ============================================================================== -->
+    <section class="site-section section-menu" id="menu">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">03 / THE DASTARKHĀN</span>
+          <h2 class="section-title">Heritage Feast Menu</h2>
+          <p class="section-lead">
+            Every dish is cooked fresh daily using pasture-raised South Australian meats, pure ghee, and century-old recipes.
+          </p>
+
+          <!-- Menu Filter Buttons -->
+          <div class="menu-filter-bar" role="tablist" aria-label="Menu Categories">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Dishes</button>
+            <button class="filter-tab" data-filter="biryani" role="tab" aria-selected="false">Dum Biryanis</button>
+            <button class="filter-tab" data-filter="tandoor" role="tab" aria-selected="false">Tandoor & Pit</button>
+            <button class="filter-tab" data-filter="curry" role="tab" aria-selected="false">Slow Curries</button>
+            <button class="filter-tab" data-filter="sides" role="tab" aria-selected="false">Breads & Refresh</button>
+          </div>
+        </div>
+
+        <div class="menu-cards-grid" id="menu-grid">
+          <!-- Dish 1 -->
+          <article class="menu-card" data-category="biryani">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/biryani.webp" alt="Gosht Dum Biryani" loading="lazy" width="600" height="400">
+              <span class="menu-tag">SIGNATURE</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Gosht Dum Biryani</h3>
+                <span class="menu-card-price">$28</span>
+              </div>
+              <p class="menu-card-desc">Aged long-grain basmati and pasture-raised goat on the bone, infused with twenty-four strands of Kashmiri saffron under a sealed dough purdah.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">HALAL</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 2 -->
+          <article class="menu-card" data-category="curry">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/makhani.webp" alt="Old Delhi Murgh Makhani" loading="lazy" width="600" height="400">
+              <span class="menu-tag">CHEF CHOICE</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Old Delhi Murgh Makhani</h3>
+                <span class="menu-card-price">$26</span>
+              </div>
+              <p class="menu-card-desc">Charcoal-charred chicken simmered for eight hours in vine-ripened tomatoes, churned cultured butter, and hand-rubbed kasuri methi leaves.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">HALAL</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 3 -->
+          <article class="menu-card" data-category="tandoor">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/tandoori.webp" alt="Charcoal Fire Tandoori Murgh" loading="lazy" width="600" height="400">
+              <span class="menu-tag">480°C CHARCOAL</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Charcoal Tandoori Murgh</h3>
+                <span class="menu-card-price">$25</span>
+              </div>
+              <p class="menu-card-desc">Whole spring chicken steeped for twelve hours in hung buffalo curd, cold-pressed mustard oil, and fiery Mathania chillies, roasted at 480°C.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">HALAL</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 4 -->
+          <article class="menu-card" data-category="tandoor">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/seekh.webp" alt="Peshawari Lamb Seekh" loading="lazy" width="600" height="400">
+              <span class="menu-tag">IRON SKEWER</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Peshawari Lamb Seekh</h3>
+                <span class="menu-card-price">$24</span>
+              </div>
+              <p class="menu-card-desc">Finely minced pasture lamb shoulder beaten with marrow, green cardamom, and smoked cloves, seared over screaming-hot red ironbark coals.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">HALAL</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 5 -->
+          <article class="menu-card" data-category="tandoor">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/tikka.webp" alt="Tandoori Malai Paneer Tikka" loading="lazy" width="600" height="400">
+              <span class="menu-tag">VEGETARIAN</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Tandoori Paneer Tikka</h3>
+                <span class="menu-card-price">$22</span>
+              </div>
+              <p class="menu-card-desc">Freshly curdled full cream cottage paneer marinated in crushed yellow mustard seed, toasted carom seeds, and blistered sweet bell peppers.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">VEG</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 6 -->
+          <article class="menu-card" data-category="curry">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/dal.webp" alt="24-Hour Dal Makhani" loading="lazy" width="600" height="400">
+              <span class="menu-tag">OVERNIGHT DUM</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">24-Hour Dal Makhani</h3>
+                <span class="menu-card-price">$20</span>
+              </div>
+              <p class="menu-card-desc">Slow-simmered whole black urad lentils and red kidney beans steeped through the night over dying tandoor charcoals with churned white butter.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">VEG</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 7 -->
+          <article class="menu-card" data-category="sides">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/naan.webp" alt="Clay Oven Garlic Butter Naan" loading="lazy" width="600" height="400">
+              <span class="menu-tag">CLAY OVEN</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Garlic Butter Naan</h3>
+                <span class="menu-card-price">$7</span>
+              </div>
+              <p class="menu-card-desc">Naturally fermented dough slapped firmly against the curved 480°C clay wall, blistered in thirty seconds and basted instantly with smoking garlic ghee.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">VEG</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dish 8 -->
+          <article class="menu-card" data-category="sides">
+            <div class="menu-card-img-wrap">
+              <img src="media/img/lassi.webp" alt="Alphonso Mango Kesari Lassi" loading="lazy" width="600" height="400">
+              <span class="menu-tag">CHILLED</span>
+            </div>
+            <div class="menu-card-body">
+              <div class="menu-card-header">
+                <h3 class="menu-card-title">Alphonso Mango Lassi</h3>
+                <span class="menu-card-price">$9</span>
+              </div>
+              <p class="menu-card-desc">Chilled thick buffalo milk curd hand-whisked with Ratnagiri Alphonso mango pulp, crushed green cardamom pods, and delicate edible silver vark.</p>
+              <div class="menu-card-footer">
+                <span class="diet-badge">VEG</span>
+                <span class="diet-badge">GF</span>
+                <a href="tel:+61882319988" class="menu-card-cta">Order Now</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         5. TANDOOR SECTION: 480°C CHARCOAL FIRE
+         ============================================================================== -->
+    <section class="site-section section-tandoor" id="tandoor">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">04 / RED IRONBARK CHARCOAL</span>
+          <h2 class="section-title">480°C Clay Pit Pitmastery</h2>
+          <p class="section-lead">
+            No gas burner can replicate the primeval sizzle of Australian red ironbark lump charcoal. Our sunken clay tandoor maintains intense radiant heat that chars outer marinades while sealing natural juices inside.
+          </p>
+        </div>
+
+        <div class="tandoor-showcase-grid">
+          <div class="tandoor-visual-card">
+            <img src="media/img/charcoal.webp" alt="Red glowing tandoor coals" loading="lazy" width="900" height="600">
+            <div class="tandoor-visual-caption">
+              <h4>Australian Ironbark Coals</h4>
+              <p>Burning cleanly at nearly five hundred degrees Celsius to impart authentic wood-fired smokiness.</p>
+            </div>
+          </div>
+
+          <div class="tandoor-visual-card">
+            <img src="media/img/feast.webp" alt="Dastarkhan feast spread on slate" loading="lazy" width="900" height="600">
+            <div class="tandoor-visual-caption">
+              <h4>The Royal Spread</h4>
+              <p>Served straight from the clay pit to your wooden dastarkhān platter with mint chutney and pickled shallots.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         6. VISIT SECTION: GOUGER STREET, ADELAIDE & BOOKING
+         ============================================================================== -->
+    <section class="site-section section-visit" id="visit">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-eyebrow">05 / ADELAIDE DINING</span>
+          <h2 class="section-title">Feast at Gouger Street</h2>
+          <p class="section-lead">
+            Located in the vibrant culinary heart of Adelaide, just steps from the Adelaide Central Market. Walk-ins always welcomed; bookings recommended for parties of four or more.
+          </p>
+        </div>
+
+        <div class="visit-layout-grid">
+          <!-- Information Card -->
+          <div class="visit-info-card">
+            <div class="visit-info-item">
+              <span class="info-label">LOCATION</span>
+              <p class="info-val">184 Gouger Street<br>Adelaide, SA 5000</p>
+              <a href="https://maps.google.com/?q=184+Gouger+Street+Adelaide+SA" target="_blank" rel="noopener noreferrer" class="map-link">
+                View on Google Maps →
+              </a>
+            </div>
+
+            <div class="visit-info-item">
+              <span class="info-label">OPENING HOURS</span>
+              <p class="info-val">Monday – Sunday<br>11:30 AM – 10:30 PM</p>
+              <span class="info-sub">Kitchen closes 10:00 PM</span>
+            </div>
+
+            <div class="visit-info-item">
+              <span class="info-label">CONTACT & ORDERS</span>
+              <a href="tel:+61882319988" class="info-phone">(08) 8231 9988</a>
+              <span class="info-sub">Takeaway orders & table enquiries</span>
+            </div>
+
+            <div class="visit-info-item">
+              <span class="info-label">DIETARY REQUIREMENTS</span>
+              <p class="info-val">100% Certified Halal Meats.<br>Extensive Gluten-Free and Vegetarian options available.</p>
+            </div>
+          </div>
+
+          <!-- Table Enquiry Form -->
+          <div class="visit-form-card">
+            <h3 class="form-title">Reserve a Table</h3>
+            <p class="form-subtitle">For tonight or immediate seatings, please call us directly.</p>
+
+            <form class="booking-form" id="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="b-name">Your Name</label>
+                  <input type="text" id="b-name" name="name" placeholder="Rishab Raj" required>
+                </div>
+                <div class="form-group">
+                  <label for="b-phone">Phone Number</label>
+                  <input type="tel" id="b-phone" name="phone" placeholder="0400 000 000" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="b-guests">Guests</label>
+                  <select id="b-guests" name="guests" required>
+                    <option value="2">2 Guests</option>
+                    <option value="4" selected>4 Guests</option>
+                    <option value="6">6 Guests</option>
+                    <option value="8">8 Guests</option>
+                    <option value="large">10+ (Private Feast)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="b-time">Preferred Time</label>
+                  <select id="b-time" name="time" required>
+                    <option value="12:00">12:00 PM (Lunch)</option>
+                    <option value="13:00">1:00 PM (Lunch)</option>
+                    <option value="18:00" selected>6:00 PM (Dinner)</option>
+                    <option value="19:30">7:30 PM (Dinner)</option>
+                    <option value="20:30">8:30 PM (Dinner)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="b-notes">Special Occasion or Dietary Notes</label>
+                <textarea id="b-notes" name="notes" rows="2" placeholder="Birthday celebration, extra saffron, mild spice..."></textarea>
+              </div>
+
+              <button type="submit" class="booking-submit-btn" id="b-submit-btn">
+                <span>Request Reservation</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+
+              <div class="form-feedback" id="form-feedback" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==============================================================================
+       7. SITE FOOTER
+       ============================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+              <path d="M6 14 Q16 11 26 14 L28 17 C28 26 23 30 16 30 C9 30 4 26 4 17 Z" fill="rgba(240, 160, 50, 0.2)" stroke="var(--saffron)" stroke-width="2"/>
+              <path d="M5 14 Q16 10 27 14" stroke="var(--cream)" stroke-width="2"/>
+            </svg>
+            <span class="nav-logo-text">Mr.<strong>Biriyaniwala</strong></span>
+          </div>
+          <p class="footer-tagline">Hyderabadi Dum Biryani & Charcoal Tandoor House.<br>184 Gouger Street, Adelaide SA 5000</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer Quick Links">
+          <a href="#hero-container" class="footer-link">Signature Craft</a>
+          <a href="#the-dum" class="footer-link">The Dum</a>
+          <a href="#spices" class="footer-link">24 Spices</a>
+          <a href="#menu" class="footer-link">Menu</a>
+          <a href="#tandoor" class="footer-link">Tandoor</a>
+          <a href="#visit" class="footer-link">Visit</a>
+        </nav>
+
+        <div class="footer-action">
+          <a href="tel:+61882319988" class="footer-call-btn">
+            <span>Call (08) 8231 9988</span>
+          </a>
+          <a href="#hero-container" class="back-to-top" aria-label="Back to top">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Mr. Biriyaniwala Adelaide. All rights reserved. 100% Halal Certified.</p>
+        <p class="footer-acknowledgement">We acknowledge the Kaurna people as the traditional custodians of the Adelaide Plains.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
